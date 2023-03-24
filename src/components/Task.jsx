@@ -6,7 +6,7 @@ import { Tag } from "./Tag";
 export const Task = ({ task, index }) => {
   const { heading, status, desc, assignee, type, id } = task;
   return (
-    <Draggable  draggableId={id} index={index}>
+    <Draggable draggableId={id} index={index}>
       {(provided) => (
         <TaskCard
           ref={provided.innerRef}
@@ -42,6 +42,20 @@ const TaskCard = styled.div`
         return "#5BC0F8";
     }
   }};
+  background-color: ${({ status }) => {
+    switch (status) {
+      case "Todo":
+        return "#5BC0F8";
+      case "Progress":
+        return "#FFC93C";
+      case "Done":
+        return "#03C988";
+      default:
+        return "#5BC0F8";
+    }
+  }};
+
+  color: white;
   border-radius: 5px;
   padding: 2px;
   cursor: grab;

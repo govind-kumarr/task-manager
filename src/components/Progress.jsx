@@ -26,7 +26,7 @@ export const ProgressTable = ({ heading, tasks }) => {
 };
 
 const TableContainer = styled.div`
-  min-height: 80vh;
+  /* min-height: 80vh; */
   /* border-top-left-radius: 5px;
   border-top-right-radius: 5px; */
   border-radius: 5px;

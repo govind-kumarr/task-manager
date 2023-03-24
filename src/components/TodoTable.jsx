@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Task } from "./Task";
 
 export const TodoTable = ({ heading, tasks }) => {
-
   return (
     <TableContainer heading={heading}>
       <div className="table-header">{heading}</div>
@@ -27,7 +26,7 @@ export const TodoTable = ({ heading, tasks }) => {
 };
 
 const TableContainer = styled.div`
-  min-height: 80vh;
+  /* min-height: 80vh; */
   /* border-top-left-radius: 5px;
   border-top-right-radius: 5px; */
   border-radius: 5px;
