@@ -16,7 +16,7 @@ export const Task = ({ task, index }) => {
           status={status}
         >
           <div className="task-heading">
-            <p>{heading}</p>
+            <div className="heading_title">{heading}</div>
             <span className="tag">
               <Tag type={type} />
             </span>
@@ -68,10 +68,17 @@ const TaskCard = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 3px 5px;
-    p {
-      text-decoration: underline;
-      text-decoration: underline solid;
+    .heading_title {
       cursor: pointer;
+      position: relative;
+    }
+    .heading_title:after {
+      content: "";
+      width: 100%;
+      border: 1px solid white;
+      position: absolute;
+      left: 0;
+      bottom: 0;
     }
     /* background-color: ${({ status }) => {
       switch (status) {
