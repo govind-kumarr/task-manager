@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --todo-color: #5BC0F8;
+  --progress-color: #FFC93C;
+  --done-color: #03C988;
+}
