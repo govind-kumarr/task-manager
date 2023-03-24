@@ -1,18 +1,26 @@
 import React from "react";
+import { Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { Task } from "./Task";
 
-export const Table = ({ heading, tasks }) => {
-  console.log(tasks);
-  const myTasks = tasks.filter((task) => task.status == heading);
+export const ProgressTable = ({ heading, tasks }) => {
   return (
     <TableContainer heading={heading}>
       <div className="table-header">{heading}</div>
-      <div className="tasks">
-        {myTasks.map((task) => (
-          <Task id={task.id} task={task} />
-        ))}
-      </div>
+      <Droppable droppableId={heading}>
+        {(provided) => (
+          <div
+            className="tasks"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {tasks.map((task, index) => (
+              <Task key={task.id} index={index} task={task} />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </TableContainer>
   );
 };

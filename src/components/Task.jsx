@@ -1,13 +1,30 @@
 import React from "react";
+import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
+import { Tag } from "./Tag";
 
-export const Task = ({ task }) => {
-  const { heading, status, desc, assignee } = task;
+export const Task = ({ task, index }) => {
+  const { heading, status, desc, assignee, type, id } = task;
   return (
-    <TaskCard heading={heading} status={status}>
-      <div className="task-heading">{heading}</div>
-      <p>{desc}</p>
-    </TaskCard>
+    <Draggable  draggableId={id} index={index}>
+      {(provided) => (
+        <TaskCard
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          heading={heading}
+          status={status}
+        >
+          <div className="task-heading">
+            <p>{heading}</p>
+            <span className="tag">
+              <Tag type={type} />
+            </span>
+          </div>
+          <p>{desc}</p>
+        </TaskCard>
+      )}
+    </Draggable>
   );
 };
 const TaskCard = styled.div`
@@ -33,6 +50,15 @@ const TaskCard = styled.div`
   }
 
   .task-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 5px;
+    p {
+      text-decoration: underline;
+      text-decoration: underline solid;
+      cursor: pointer;
+    }
     /* background-color: ${({ status }) => {
       switch (status) {
         case "Todo":
