@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
+import { matchColor } from "../utils/functions";
 import { Task } from "./Task";
 
+let taskForm;
 export const TodoTable = ({ heading, tasks }) => {
+  useEffect(() => {
+    taskForm = document.querySelector(".addTask");
+  }, []);
+
+  const handleAddTodo = () => {
+    let data = new FormData(taskForm);
+    data = Object.fromEntries(data);
+    console.log(data);
+
+    taskForm.classList.toggle("showTaskForm");
+  };
   return (
     <TableContainer heading={heading}>
       <div className="table-header">{heading}</div>
@@ -18,6 +31,32 @@ export const TodoTable = ({ heading, tasks }) => {
               <Task key={task.id} index={index} task={task} />
             ))}
             {provided.placeholder}
+            <form className="addTask">
+              <input
+                type="text"
+                className="heading"
+                placeholder="Enter Heading..."
+              />
+              <input
+                type="text"
+                className="desc"
+                placeholder="Enter Description..."
+              />
+              <select name="tag" id="tag">
+                <option value="">select tag</option>
+                <option value="Bug">bug</option>
+                <option value="Feature">feature</option>
+                <option value="Story">story</option>
+              </select>
+              <input
+                type="text"
+                className="assignee"
+                placeholder="Enter Assignee Name..."
+              />
+            </form>
+            <button className="createTodo" onClick={handleAddTodo}>
+              Add Task
+            </button>
           </div>
         )}
       </Droppable>
@@ -32,18 +71,42 @@ const TableContainer = styled.div`
   border-radius: 5px;
 
   border: 1px solid;
-  border-color: ${({ heading }) => {
-    switch (heading) {
-      case "Todo":
-        return "#5BC0F8";
-      case "Progress":
-        return "#FFC93C";
-      case "Done":
-        return "#03C988";
-      default:
-        return "#5BC0F8";
+  border-color: ${matchColor};
+
+  .addTask {
+    border: 1px solid ${matchColor};
+    border-radius: 5px;
+    width: 90%;
+    background: ${matchColor};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    outline: none;
+    gap: 5px;
+    display: none;
+
+    font-size: large;
+
+    input {
+      width: 90%;
+      padding: 3px;
+      border: 2px solid ${matchColor};
+      border-radius: 5px;
     }
-  }};
+
+    input:focus {
+      outline: none;
+    }
+
+    select {
+      width: 90%;
+    }
+  }
+
+  .showTaskForm {
+    display: flex;
+  }
 
   .tasks {
     margin: 1rem 0rem;
@@ -52,24 +115,30 @@ const TableContainer = styled.div`
     gap: 10px;
     align-items: center;
     justify-content: space-around;
+
+    .createTodo {
+      justify-self: flex-end;
+      background-color: ${matchColor};
+      width: 90%;
+      border: 2px solid white;
+      border-radius: 5px;
+      padding: 2px 5px;
+      color: white;
+      font-weight: bold;
+      font-size: larger;
+
+      cursor: pointer;
+    }
+    .createTodo:hover {
+      opacity: 0.7;
+    }
   }
   .table-header {
     color: white;
     text-align: center;
     font-weight: bold;
     font-size: larger;
-    background-color: ${({ heading }) => {
-      switch (heading) {
-        case "Todo":
-          return "#5BC0F8";
-        case "Progress":
-          return "#FFC93C";
-        case "Done":
-          return "#03C988";
-        default:
-          return "#5BC0F8";
-      }
-    }};
+    background-color: ${matchColor};
     padding: 5px 10px;
     text-transform: capitalize;
   }

@@ -16,6 +16,18 @@ export const TaskBox = () => {
   const [progress, setProgress] = useState(initialProgress);
   const [done, setDone] = useState(initialDone);
 
+  const addTodo = (data) => {
+    if (data) setTodo([...todo, data]);
+  };
+
+  const addProgress = (data) => {
+    if (data) setProgress([...progress, data]);
+  };
+
+  const addDone = (data) => {
+    if (data) setDone([...done, data]);
+  };
+
   const handleOnDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     if (!destination) return;
@@ -88,9 +100,13 @@ export const TaskBox = () => {
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <div className="task_box">
-        <TodoTable heading={"Todo"} tasks={todo} />
-        <ProgressTable heading={"Progress"} tasks={progress} />
-        <DoneTable heading={"Done"} tasks={done} />
+        <TodoTable heading={"Todo"} tasks={todo} addTodo={addTodo} />
+        <ProgressTable
+          heading={"Progress"}
+          tasks={progress}
+          addProgress={addProgress}
+        />
+        <DoneTable heading={"Done"} tasks={done} addDone={addDone} />
       </div>
     </DragDropContext>
   );
